@@ -35,13 +35,13 @@ const calculateBmi = (height: number, weight: number): BmiResult => {
   let category: string = 'Unknown category';
   switch (true) {
     case bmi < 16:
-      category = 'Underweight (Severe thinness)	';
+      category = 'Underweight (Severe thinness)';
       break;
     case bmi <= 16.9:
-      category = 'Underweight (Moderate thinness)	';
+      category = 'Underweight (Moderate thinness)';
       break;
     case bmi <= 18.4:
-      category = 'Underweight (Mild thinness)	';
+      category = 'Underweight (Mild thinness)';
       break;
     case bmi <= 24.9:
       category = 'Normal range';
@@ -65,14 +65,18 @@ const calculateBmi = (height: number, weight: number): BmiResult => {
   };
 }
 
-try {
-  const { height, weight } = parseBmiArguments(process.argv);
-  const { bmi, category } = calculateBmi(height, weight);
-  console.log(`Your BMI is ${bmi} and your category is '${category}'`);
-} catch (error: unknown) {
-  let errorMessage: string = 'Something went wrong';
-  if (error instanceof Error) {
-    errorMessage += `\nError: ${error.message}`;
+if (require.main === module) {
+  try {
+    const { height, weight } = parseBmiArguments(process.argv);
+    const { bmi, category } = calculateBmi(height, weight);
+    console.log(`Your BMI is ${bmi} and your category is '${category}'`);
+  } catch (error: unknown) {
+    let errorMessage: string = 'Something went wrong';
+    if (error instanceof Error) {
+      errorMessage += `\nError: ${error.message}`;
+    }
+    console.log(errorMessage);
   }
-  console.log(errorMessage);
 }
+
+export default calculateBmi;

@@ -1,8 +1,32 @@
 import express from 'express';
+import calculateBmi from './bmiCalculator';
+
 const app = express();
+
 
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!');
+});
+
+app.get('/bmi', (req, res) => {
+  const height: number = Number(req.query.height);
+  const weight: number = Number(req.query.weight);
+  console.log(height, weight);
+
+  if (isNaN(height) || isNaN(weight)) {
+    res.status(400).send({ error: 'wrong type of parameters' });
+  }
+  if (height <= 0 || weight <= 0) {
+    res.status(400).send({ error: 'height and weight must be positive numbers' });
+  }
+  
+  const calculatedBmi = calculateBmi(height, weight);
+  res.status(200).send({
+    weight,
+    height,
+    bmi: calculatedBmi.bmi,
+    category: calculatedBmi.category
+  });
 });
 
 const PORT = 3003;
