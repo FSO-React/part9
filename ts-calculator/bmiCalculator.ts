@@ -1,4 +1,28 @@
-const calculateBmi = (height: number, weight: number): string => {
+interface CorporalValues {
+  height: number;
+  weight: number;
+}
+
+interface BmiResult {
+  bmi: number;
+  category: string;
+}
+
+const parseBmiArguments = (args: string[]): CorporalValues => {
+  if (args.length < 4) throw new Error('Not enough arguments: atleast 2 arguments are required (1 for height and 1 for weight)');
+  if (args.length > 4) throw new Error('Too many arguments: only 2 arguments are required (1 for height and 1 for weight)');
+
+  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+    return {
+      height: Number(args[2]),
+      weight: Number(args[3])
+    }
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+}
+
+const calculateBmi = (height: number, weight: number): BmiResult => {
   if (isNaN(height) || isNaN(weight)) {
     throw new Error('Provided values were not numbers!');
   }
@@ -35,14 +59,20 @@ const calculateBmi = (height: number, weight: number): string => {
       category = 'Obese (Class III)';
       break;
   }
-  return `Your BMI is ${bmi} and you are ${category}`;
+  return {
+    bmi,
+    category
+  };
 }
 
-if (process.argv.length < 4 || process.argv.length > 4) {
-  console.log('Please provide height and weight as command line arguments');
-  process.exit(1);
-} 
-
-const height = Number(process.argv[2]);
-const weight = Number(process.argv[3]);
-console.log(calculateBmi(height, weight));
+try {
+  const { height, weight } = parseBmiArguments(process.argv);
+  const { bmi, category } = calculateBmi(height, weight);
+  console.log(`Your BMI is ${bmi} and your category is '${category}'`);
+} catch (error: unknown) {
+  let errorMessage: string = 'Something went wrong';
+  if (error instanceof Error) {
+    errorMessage += `\nError: ${error.message}`;
+  }
+  console.log(errorMessage);
+}
