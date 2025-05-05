@@ -16,13 +16,13 @@ const parseBmiArguments = (args: string[]): CorporalValues => {
     return {
       height: Number(args[2]),
       weight: Number(args[3])
-    }
+    };
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
-const calculateBmi = (height: number, weight: number): BmiResult => {
+export const calculateBmi = (height: number, weight: number): BmiResult => {
   if (isNaN(height) || isNaN(weight)) {
     throw new Error('Provided values were not numbers!');
   }
@@ -63,7 +63,7 @@ const calculateBmi = (height: number, weight: number): BmiResult => {
     bmi,
     category
   };
-}
+};
 
 if (require.main === module) {
   try {
@@ -78,5 +78,3 @@ if (require.main === module) {
     console.log(errorMessage);
   }
 }
-
-export default calculateBmi;

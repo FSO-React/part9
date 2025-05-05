@@ -23,7 +23,7 @@ const parseExerciseArguments = (args: string[]): ExerciseValues => {
     throw new Error('Target provided value wasn\'t not a number!');
   }
 
-  let days: number[] = [];
+  const days: number[] = [];
   for (let i = 3; i < args.length; i++) {
     if (!isNaN(Number(args[i]))) {
       days.push(Number(args[i]));
@@ -35,10 +35,10 @@ const parseExerciseArguments = (args: string[]): ExerciseValues => {
   return {
     target,
     days
-  }
-}
+  };
+};
 
-const calculateExercises = ({ days, target }: ExerciseValues): ExerciseResult => {
+export const calculateExercises = ({ days, target }: ExerciseValues): ExerciseResult => {
   if (days.length === 0) {
     throw new Error('Days must be a non-empty array of numbers');
   }
@@ -78,7 +78,7 @@ const calculateExercises = ({ days, target }: ExerciseValues): ExerciseResult =>
     target,
     average
   };
-}
+};
 
 try {
   const { target, days } = parseExerciseArguments(process.argv);
