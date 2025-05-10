@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const ping_route_1 = __importDefault(require("./routes/ping.route"));
 const diagnoses_route_1 = __importDefault(require("./routes/diagnoses.route"));
+const patients_route_1 = __importDefault(require("./routes/patients.route"));
 const app = (0, express_1.default)();
 const router = express_1.default.Router();
 app.use((0, cors_1.default)());
@@ -19,6 +20,7 @@ router.use((req, _res, next) => {
 app.use('/api', router);
 app.use('/api/ping', ping_route_1.default);
 app.use('/api/diagnoses', diagnoses_route_1.default);
+app.use('/api/patients', patients_route_1.default);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
