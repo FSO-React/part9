@@ -27,9 +27,10 @@ router.get('/', (_req, res: Response<NonSensitivePatient[]>) => {
   res.send(patientsService.getNonSensitivePatients());
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res: Response<Patient>) => {
   const patient = patientsService.findById(req.params.id);
   if (patient) {
+    console.log(patient);
     res.send(patient);
   } else {
     res.sendStatus(404);
