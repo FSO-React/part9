@@ -17,6 +17,9 @@ const DiaryForm = (props: DiaryFormProps) => {
   const [weather, setWeather] = useState('');
   const [comment, setComment] = useState('');
 
+  const visibilityOptions = ['great', 'good', 'ok', 'poor'];
+  const weatherOptions = ['sunny', 'rainy', 'cloudy', 'windy', 'stormy'];
+
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
 
@@ -56,10 +59,24 @@ const DiaryForm = (props: DiaryFormProps) => {
         date: <input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
       </div>
       <div>
-        visibility: <input value={visibility} onChange={(e) => setVisibility(e.target.value)} />
+        visibility: {
+          visibilityOptions.map((option) => (
+            <label key={option}>
+              <input type="radio" value={option} checked={visibility === option} onChange={(e) => setVisibility(e.target.value)} />
+              {option}
+            </label>
+          ))
+        }
       </div>
       <div>
-        weather: <input value={weather} onChange={(e) => setWeather(e.target.value)} />
+        weather: {
+          weatherOptions.map((option) => (
+            <label key={option}>
+              <input type="radio" value={option} checked={visibility === option} onChange={(e) => setVisibility(e.target.value)} />
+              {option}
+            </label>
+          ))
+        }
       </div>
       <div>
         comment: <input value={comment} onChange={(e) => setComment(e.target.value)} />
