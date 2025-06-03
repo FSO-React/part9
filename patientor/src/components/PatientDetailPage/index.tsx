@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Typography, CircularProgress } from '@mui/material';
+import { Box, Typography, CircularProgress, Stack } from '@mui/material';
 import { Male, Female } from '@mui/icons-material';
-// import axios from 'axios';
+import EntryDetail from "./EntryDetail";
 
 import { Patient, Diagnosis } from "../../types";
 
@@ -66,9 +66,6 @@ const PatientDetailPage = () => {
     );
   }
 
-  const { entries } = patient;
-  const diagnosisCodes = entries.map(entry => entry.diagnosisCodes).filter(Boolean).flat();
-  
   return (
     <div className="App">
       <Box sx={{ mt: 4 }} >
@@ -87,18 +84,16 @@ const PatientDetailPage = () => {
         <Typography variant="h6" sx={{ mb: 2, mt: 2 }}>
           Entries
         </Typography>
-        {entries.map((entry) => (
-          <Typography key={entry.id} variant="body1">
-            {entry.date} <em>{entry.description}</em>
+        {patient.entries.length === 0 && (
+          <Typography variant="body1" sx={{ mt: 1 }}>
+            no entries
           </Typography>
-        ))}
-        <ul>
-          {diagnosisCodes.map((code) => (
-            <li key={code}>
-              {code}: {diagnosis?.find(d => d.code === code)?.name}
-            </li>
-          ))}
-        </ul>
+        )}
+        {patient.entries.map(entry => (
+          <Stack key={entry.id} sx={{ border: 2, borderRadius: 3, padding: 2, my: 2 }}>
+            <EntryDetail key={entry.id} entry={entry} diagnoses={diagnosis || []} />
+          </Stack>
+        ))}  
       </Box>
     </div>
   );
