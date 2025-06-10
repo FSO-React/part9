@@ -1,4 +1,4 @@
-import { Entry, Diagnosis } from '../../types';
+import { Entry, Diagnosis, EntryType } from '../../types';
 import { assertNever } from '../../utils';
 import { Typography } from '@mui/material';
 import { HealthAndSafety, Work, LocalHospital } from '@mui/icons-material';
@@ -15,7 +15,7 @@ const EntryDetail = (props: Props) => {
   const { entry, diagnoses } = props;
 
   switch (entry.type) {
-    case 'HealthCheck':
+    case EntryType.HealthCheck:
       return (
         <div>
           <Typography variant="body1">
@@ -32,7 +32,7 @@ const EntryDetail = (props: Props) => {
         </div>
       );
 
-    case 'Hospital':
+    case EntryType.Hospital:
       return (
       <div>
         <Typography variant="body1">
@@ -51,7 +51,7 @@ const EntryDetail = (props: Props) => {
       </div>
       );
 
-    case 'OccupationalHealthcare':
+    case EntryType.OccupationalHealthcare:
       return (
         <div>
           <Typography variant="body1">
